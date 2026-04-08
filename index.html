@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulado – E.E. Prof. Antônio Dias Maciel · 1º Trimestre 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#F7F5F0;--surface:#FFFFFF;--surface2:#F0EDE6;
+  --accent:#1A3A5C;--accent2:#2E6DA4;--accent-light:#E8F0F8;
+  --success:#1B6B3A;--success-bg:#E6F4EC;
+  --warn:#7A4200;--warn-bg:#FFF3E0;
+  --danger:#8B1A1A;--danger-bg:#FDEAEA;
+  --text:#1A1A1A;--text2:#4A4A4A;--text3:#7A7A7A;
+  --border:#D8D3C8;--border2:#C5BFB3;
+  --radius:10px;--radius-lg:16px;--shadow:0 2px 12px rgba(0,0,0,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.header{background:var(--accent);color:white;padding:2rem 2.5rem;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.05)}
+.header h1{font-size:1.5rem;font-weight:700;letter-spacing:-0.02em}
+.header p{font-size:0.85rem;opacity:0.7;margin-top:4px}
+.header-meta{display:flex;gap:1.5rem;margin-top:1rem;flex-wrap:wrap}
+.header-badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:4px 12px;font-size:0.78rem;font-weight:500}
+.screen{display:none}.screen.active{display:block}
+.container{max-width:860px;margin:0 auto;padding:2rem 1.5rem}
+.login-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2.5rem;max-width:520px;margin:3rem auto 0;box-shadow:var(--shadow)}
+.login-card h2{font-size:1.25rem;font-weight:600;color:var(--accent);margin-bottom:0.4rem}
+.login-card p{font-size:0.85rem;color:var(--text3);margin-bottom:1.8rem}
+label{display:block;font-size:0.8rem;font-weight:500;color:var(--text2);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em}
+input,select,textarea{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--radius);font-family:'Sora',sans-serif;font-size:0.9rem;color:var(--text);background:var(--surface);transition:border-color 0.2s;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--accent2);box-shadow:0 0 0 3px rgba(46,109,164,0.12)}
+textarea{resize:vertical;min-height:80px;line-height:1.5}
+.field{margin-bottom:1.2rem}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--radius);font-family:'Sora',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;border:none;transition:all 0.18s}
+.btn-primary{background:var(--accent);color:white}.btn-primary:hover{background:#142d4a;transform:translateY(-1px)}
+.btn-secondary{background:var(--surface);color:var(--accent);border:1.5px solid var(--border2)}.btn-secondary:hover{background:var(--accent-light)}
+.btn-success{background:var(--success);color:white}.btn-success:hover{background:#145530}
+.btn-wa{background:#25D366;color:white}.btn-wa:hover{background:#1da854}
+.btn-danger{background:var(--danger);color:white}.btn-danger:hover{background:#6d1414}
+.btn-pdf{background:#c0392b;color:white}.btn-pdf:hover{background:#962d22}
+.btn-full{width:100%;justify-content:center}.btn-sm{padding:6px 14px;font-size:0.8rem}
+.progress-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.2rem 1.5rem;margin-bottom:1.5rem}
+.progress-title{display:flex;justify-content:space-between;font-size:0.85rem;color:var(--text2);margin-bottom:10px}
+.progress-bar-bg{background:var(--surface2);border-radius:99px;height:8px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent2),#4A9AD4);border-radius:99px;transition:width 0.4s}
+.discipline-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:1.2rem;overflow:hidden}
+.discipline-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;cursor:pointer;user-select:none;transition:background 0.15s}
+.discipline-header:hover{background:var(--bg)}
+.discipline-info{display:flex;align-items:center;gap:12px}
+.discipline-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;flex-shrink:0}
+.discipline-name{font-weight:600;font-size:0.95rem}
+.discipline-meta{font-size:0.78rem;color:var(--text3);margin-top:2px}
+.discipline-badge{font-size:0.75rem;font-weight:600;padding:4px 10px;border-radius:99px;font-family:'JetBrains Mono',monospace}
+.badge-ok{background:var(--success-bg);color:var(--success)}.badge-partial{background:var(--warn-bg);color:var(--warn)}.badge-empty{background:var(--surface2);color:var(--text3)}
+.chevron{margin-left:12px;font-size:0.7rem;color:var(--text3);transition:transform 0.2s}
+.discipline-body{display:none;border-top:1px solid var(--border);padding:1.5rem}
+.discipline-section.open .discipline-body{display:block}
+.discipline-section.open .chevron{transform:rotate(180deg)}
+.question-list{display:flex;flex-direction:column;gap:1rem}
+.question-card{border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;position:relative;background:var(--bg)}
+.question-card .q-number{position:absolute;top:-10px;left:14px;background:var(--accent);color:white;font-size:0.7rem;font-weight:700;font-family:'JetBrains Mono',monospace;padding:2px 8px;border-radius:99px}
+.alternatives-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.alt-field{display:flex;align-items:flex-start;gap:8px}
+.alt-letter{width:28px;height:28px;border-radius:50%;background:var(--surface2);border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:var(--text2);flex-shrink:0;margin-top:1px}
+.alt-field input{flex:1}
+.correct-field{margin-top:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.correct-field label{margin:0;text-transform:none;letter-spacing:0;font-size:0.83rem;font-weight:600}
+.correct-radio-group{display:flex;gap:8px;flex-wrap:wrap}
+.correct-radio-group label{display:flex;align-items:center;gap:4px;cursor:pointer;font-size:0.82rem;font-weight:500;color:var(--text2);background:var(--surface);border:1.5px solid var(--border);padding:4px 12px;border-radius:99px;transition:all 0.15s;text-transform:none;letter-spacing:0}
+.correct-radio-group input[type=radio]{display:none}
+.correct-radio-group input[type=radio]:checked+label{background:var(--success-bg);border-color:var(--success);color:var(--success)}
+.hint-box{background:var(--accent-light);border-left:3px solid var(--accent2);border-radius:0 var(--radius) var(--radius) 0;padding:10px 14px;font-size:0.8rem;color:var(--accent);margin-bottom:1.2rem;line-height:1.5}
+/* Image upload field */
+.img-upload-area{margin-top:10px;border:2px dashed var(--border2);border-radius:var(--radius);padding:12px;background:var(--surface);cursor:pointer;transition:border-color 0.2s;text-align:center}
+.img-upload-area:hover{border-color:var(--accent2);background:var(--accent-light)}
+.img-upload-area input[type=file]{display:none}
+.img-upload-label{font-size:0.8rem;color:var(--text3);cursor:pointer;display:block}
+.img-preview{max-width:100%;max-height:200px;border-radius:6px;margin-top:8px;display:block;margin-left:auto;margin-right:auto}
+.img-remove-btn{font-size:0.75rem;color:var(--danger);cursor:pointer;margin-top:4px;background:none;border:none;font-family:'Sora',sans-serif}
+#toast{position:fixed;bottom:24px;right:24px;background:var(--accent);color:white;padding:12px 20px;border-radius:var(--radius);font-size:0.85rem;font-weight:500;box-shadow:0 4px 20px rgba(0,0,0,0.2);z-index:9999;transform:translateY(80px);opacity:0;transition:all 0.3s;pointer-events:none}
+#toast.show{transform:translateY(0);opacity:1}
+#toast.error{background:var(--danger)}
+#toast.success{background:var(--success)}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.topbar-left{display:flex;align-items:center;gap:12px}
+.teacher-tag{background:var(--accent-light);color:var(--accent2);border:1px solid #BDD5EE;border-radius:99px;padding:4px 12px;font-size:0.8rem;font-weight:600}
+.topbar-actions{display:flex;gap:8px;flex-wrap:wrap}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:1.5rem}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem}
+.stat-card .stat-val{font-size:1.8rem;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--accent)}
+.stat-card .stat-label{font-size:0.75rem;color:var(--text3);margin-top:2px;text-transform:uppercase;letter-spacing:0.05em}
+.teacher-table{width:100%;border-collapse:collapse;font-size:0.85rem}
+.teacher-table th{text-align:left;padding:8px 12px;border-bottom:2px solid var(--border2);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text3)}
+.teacher-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+.teacher-table tr:last-child td{border-bottom:none}
+.teacher-table tr:hover td{background:var(--bg)}
+.table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow-x:auto}
+.admin-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:1.5rem}
+.section-title{font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);font-weight:600;margin-bottom:1rem}
+.pw-table{width:100%;border-collapse:collapse;font-size:0.83rem}
+.pw-table th{text-align:left;padding:6px 10px;border-bottom:2px solid var(--border2);font-size:0.72rem;text-transform:uppercase;color:var(--text3)}
+.pw-table td{padding:8px 10px;border-bottom:1px solid var(--border)}
+.pw-code{font-family:'JetBrains Mono',monospace;background:var(--accent-light);color:var(--accent);padding:3px 8px;border-radius:4px;font-weight:600;letter-spacing:0.05em}
+.alert{padding:10px 16px;border-radius:var(--radius);font-size:0.85rem;margin-bottom:1rem;line-height:1.5}
+.alert-warn{background:var(--warn-bg);color:var(--warn);border-left:3px solid #E8800A}
+.alert-success{background:var(--success-bg);color:var(--success)}
+.alert-info{background:var(--accent-light);color:var(--accent);border-left:3px solid var(--accent2)}
+#modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center}
+.modal-box{background:var(--surface);border-radius:var(--radius-lg);padding:2rem;width:380px;max-width:90vw;box-shadow:0 8px 32px rgba(0,0,0,0.2)}
+.modal-box h3{font-size:1.1rem;font-weight:600;color:var(--accent);margin-bottom:0.5rem}
+.modal-box p{font-size:0.83rem;color:var(--text3);margin-bottom:1.5rem}
+.turma-selector{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.2rem}
+.turma-btn{padding:8px 16px;border:2px solid var(--border);border-radius:var(--radius);background:var(--surface);font-family:'Sora',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.15s;color:var(--text2)}
+.turma-btn.active{background:var(--accent);color:white;border-color:var(--accent)}
+.turma-btn:hover:not(.active){background:var(--surface2);border-color:var(--border2)}
+
+.discipline-icon.artes{background:#FFF0F0;color:#C0392B}
+.discipline-icon.edfisica{background:#FFF8E0;color:#E67E22}
+.discipline-icon.ensreligioso{background:#FEF5FF;color:#8E44AD}
+.discipline-icon.geografia{background:#E0FFF4;color:#16A085}
+.discipline-icon.historia{background:#FFF3E0;color:#A04000}
+.discipline-icon.ciencias{background:#E8F5FE;color:#1565C0}
+.discipline-icon.linglinglesa{background:#E8FFF0;color:#1B5E20}
+.discipline-icon.lingportugues{background:#E3F2FD;color:#0D47A1}
+.discipline-icon.matematica{background:#F3E5F5;color:#6A1B9A}
+.discipline-icon.eddigital{background:#FFF9E0;color:#C77700}
+.discipline-icon.intervencao{background:#F0FFF4;color:#145A32}
+.discipline-icon.solucoes{background:#EEF2FF;color:#3730A3}
+.discipline-icon.quimica{background:#FFF0F5;color:#880E4F}
+.discipline-icon.biologia{background:#E8F5E9;color:#1B5E20}
+.discipline-icon.sociologia{background:#FFF3E0;color:#BF360C}
+.discipline-icon.fisica{background:#E3F2FD;color:#0277BD}
+.discipline-icon.filosofia{background:#F3E5F5;color:#4A148C}
+.discipline-icon.leitura{background:#FCE4EC;color:#880E4F}
+.discipline-icon.inovacao{background:#E8F5E9;color:#2E7D32}
+.discipline-icon.producao{background:#FFF8E1;color:#E65100}
+.discipline-icon.sustentabilidade{background:#E0F2F1;color:#004D40}
+.discipline-icon.etica{background:#F3E5F5;color:#6A1B9A}
+.discipline-icon.ferramentas{background:#E8EAF6;color:#283593}
+.discipline-icon.projetointegrador{background:#E0F7FA;color:#006064}
+.discipline-icon.conexoes{background:#FCE4EC;color:#880E4F}
+hr{border:none;border-top:1px solid var(--border);margin:1.5rem 0}
+@media(max-width:600px){.header{padding:1.5rem 1.2rem}.login-card{padding:1.8rem 1.2rem;margin-top:1.5rem}.discipline-body{padding:1rem}.container{padding:1rem}.alternatives-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1 id="header-title">📋 Simulado – E.E. Prof. Antônio Dias Maciel</h1>
+  <p>Escola Estadual Prof. Antônio Dias Maciel · 1º Trimestre 2026</p>
+  <div class="header-meta" id="header-meta">
+    <span class="header-badge">Selecione a turma para continuar</span>
+  </div>
+</div>
+<div id="toast"></div>
+
+<!-- LOGIN -->
+<div id="screen-login" class="screen active">
+  <div class="container">
+    <div class="login-card">
+      <h2>Acesso do Professor</h2>
+      <p>Selecione a turma, sua disciplina e insira o código individual.</p>
+
+      <div class="field">
+        <label>Turma / Ano</label>
+        <div class="turma-selector" id="turma-selector">
+          <button class="turma-btn" onclick="selectTurma('9ANO')" data-turma="9ANO">9º Ano</button>
+          <button class="turma-btn" onclick="selectTurma('1ANO_12')" data-turma="1ANO_12">1º 1 e 1º 2</button>
+          <button class="turma-btn" onclick="selectTurma('1ANO_ADMRH')" data-turma="1ANO_ADMRH">1º ADM e 1º RH</button>
+          <button class="turma-btn" onclick="selectTurma('2ANO')" data-turma="2ANO">2º Ano</button>
+          <button class="turma-btn" onclick="selectTurma('3ANO')" data-turma="3ANO">3º Ano</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Disciplina</label>
+        <select id="login-discipline">
+          <option value="">— Selecione a turma primeiro —</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Nome do Professor(a)</label>
+        <input type="text" id="login-name" placeholder="Ex.: Prof. João Silva" autocomplete="off">
+      </div>
+      <div class="field">
+        <label>Código de Acesso Individual</label>
+        <input type="password" id="login-password" placeholder="Código fornecido pela coordenação" autocomplete="off">
+      </div>
+      <div class="alert alert-info">🔐 Cada professor possui código único por turma/disciplina. Você acessa apenas a sua disciplina.</div>
+      <button class="btn btn-primary btn-full" style="margin-top:1rem" onclick="doLogin()">Entrar →</button>
+      <hr>
+      <div style="text-align:center"><button class="btn btn-secondary btn-sm" onclick="showAdminLogin()">🔑 Acesso Administrador</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROFESSOR -->
+<div id="screen-teacher" class="screen">
+  <div class="topbar">
+    <div class="topbar-left">
+      <span style="font-weight:600;color:var(--accent);font-size:0.9rem" id="teacher-turma-label">📋 Simulado</span>
+      <span class="teacher-tag" id="teacher-tag">—</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-wa btn-sm" onclick="saveAndWhatsApp()">💬 WhatsApp</button>
+      <button class="btn btn-success btn-sm" onclick="saveData()">💾 Salvar</button>
+      <button class="btn btn-secondary btn-sm" onclick="doLogout()">Sair</button>
+    </div>
+  </div>
+  <div class="container">
+    <div class="progress-wrap">
+      <div class="progress-title">
+        <span id="progress-label">Progresso</span>
+        <span id="progress-pct" style="font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--accent)">0%</span>
+      </div>
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-fill" style="width:0%"></div></div>
+      <div id="progress-summary" style="font-size:0.78rem;color:var(--text3);margin-top:8px"></div>
+    </div>
+    <!-- WhatsApp number field -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;margin-bottom:1.2rem;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <span style="font-size:0.82rem;color:var(--text2);font-weight:600;white-space:nowrap">📱 Meu WhatsApp:</span>
+      <div style="display:flex;align-items:center;flex:1;min-width:240px;max-width:380px;position:relative">
+        <span style="position:absolute;left:12px;font-size:0.9rem;color:var(--text2);font-weight:600;pointer-events:none">+55</span>
+        <input type="text" id="teacher-whatsapp" placeholder="34 99999-0000" style="padding-left:45px;font-size:0.95rem;font-weight:600;border-color:var(--accent2);border-width:2px" oninput="onFieldChange()">
+      </div>
+      <span style="font-size:0.75rem;color:var(--text3)">Digite apenas o DDD e o número</span>
+    </div>
+    <div id="teacher-form-area"></div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:1.5rem">
+      <button class="btn btn-success" onclick="saveData()">💾 Salvar Questões</button>
+      <button class="btn btn-wa" onclick="saveAndWhatsApp()">💬 Enviar por WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="screen-admin" class="screen">
+  <div class="topbar">
+    <div class="topbar-left">
+      <span style="font-weight:600;color:var(--accent);font-size:0.9rem">⚙️ Painel Administrativo</span>
+      <span class="teacher-tag">ADMIN</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-primary btn-sm" onclick="downloadDB()">⬇ JSON</button>
+      <button class="btn btn-secondary btn-sm" onclick="downloadCSV()">📊 CSV</button>
+      <button class="btn btn-secondary btn-sm" onclick="doLogout()">Sair</button>
+    </div>
+  </div>
+  <div class="container">
+    <!-- Filters for admin -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1.5rem">
+      <div class="section-title" style="margin-bottom:12px">📚 Filtros de Impressão e Visualização</div>
+      
+      <div class="field">
+        <label>1. Selecione a Turma</label>
+        <div class="turma-selector" id="admin-turma-selector">
+          <button class="turma-btn active" onclick="adminSelectTurma('ALL')" data-turma="ALL">Todas</button>
+          <button class="turma-btn" onclick="adminSelectTurma('9ANO')" data-turma="9ANO">9º Ano</button>
+          <button class="turma-btn" onclick="adminSelectTurma('1ANO_12')" data-turma="1ANO_12">1º 1 e 1º 2</button>
+          <button class="turma-btn" onclick="adminSelectTurma('1ANO_ADMRH')" data-turma="1ANO_ADMRH">1º ADM e 1º RH</button>
+          <button class="turma-btn" onclick="adminSelectTurma('2ANO')" data-turma="2ANO">2º Ano</button>
+          <button class="turma-btn" onclick="adminSelectTurma('3ANO')" data-turma="3ANO">3º Ano</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>2. Selecione a Disciplina (Barra de Rolagem)</label>
+        <select id="admin-disc-filter" onchange="adminChangeDiscFilter()">
+          <option value="ALL">— Todas as Disciplinas —</option>
+        </select>
+      </div>
+      
+      <div style="background:var(--accent-light);border:1px solid var(--accent2);padding:1rem;border-radius:var(--radius);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:1rem">
+        <div>
+          <strong id="print-label" style="color:var(--accent);display:block">Filtro Ativo: Todas as Turmas / Todas as Disciplinas</strong>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button class="btn btn-pdf" onclick="exportAllPDF()">📄 Imprimir Prova</button>
+          <button class="btn btn-pdf" style="background:#6B2D8B" onclick="exportGabaritoPDF()">📋 Imprimir Gabarito</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-grid" id="admin-stats"></div>
+    
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1.5rem">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:10px">
+        <span class="section-title" style="margin:0">🔑 Códigos de Acesso</span>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-primary btn-sm" onclick="printPasswords()">🖨️ Imprimir Códigos</button>
+          <button class="btn btn-danger btn-sm" onclick="regeneratePasswords()">🔄 Gerar Novos Códigos</button>
+        </div>
+      </div>
+      <div class="table-wrap" style="margin-top:1rem">
+        <table class="pw-table"><thead><tr><th>Turma</th><th>Disciplina</th><th>Professor(a)</th><th>Código</th><th>Meta</th><th>Status</th></tr></thead>
+        <tbody id="pw-table-body"></tbody></table>
+      </div>
+    </div>
+    <div class="admin-toolbar">
+      <span class="section-title" style="margin:0">📝 Questões por Disciplina</span>
+      <button class="btn btn-danger btn-sm" onclick="clearAllData()">🗑 Limpar Tudo</button>
+    </div>
+    <div class="table-wrap">
+      <table class="teacher-table">
+        <thead><tr><th>Turma</th><th>Disciplina</th><th>Professor(a)</th><th>Enviadas</th><th>Meta</th><th>Status</th><th>Atualização</th><th>Ação</th></tr></thead>
+        <tbody id="admin-table-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ADMIN -->
+<div id="modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center">
+  <div class="modal-box">
+    <h3>Acesso Administrador</h3>
+    <p>Acesso ao banco completo, códigos e exportação PDF.</p>
+    <div class="field"><label>Senha Admin</label><input type="password" id="admin-password" placeholder="••••••••"></div>
+    <div style="display:flex;gap:10px;margin-top:1rem">
+      <button class="btn btn-primary" style="flex:1" onclick="doAdminLogin()">Entrar</button>
+      <button class="btn btn-secondary" onclick="closeAdminModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div id="print-area" style="display:none"></div>
+
+<script>
+// ============================================================
+// CONFIG & DATA
+// ============================================================
+const TURMAS = {
+  '9ANO': {
+    label: '9º Ano – Ensino Fundamental',
+    totalQ: 70,
+    prazo: '11/04/2026',
+    disciplines: [
+      {key:'ARTES',           label:'Artes',            total:2,  icon:'🎨',cls:'artes',       hint:'Linguagens artísticas.'},
+      {key:'EDUCAÇÃO FÍSICA', label:'Educação Física',   total:3,  icon:'⚽',cls:'edfisica',    hint:'Esportes, saúde.'},
+      {key:'ENSINO RELIGIOSO',label:'Ensino Religioso',  total:2,  icon:'✝️',cls:'ensreligioso', hint:'Ética e valores.'},
+      {key:'GEOGRAFIA',       label:'Geografia',         total:8,  icon:'🌎',cls:'geografia',   hint:'Geopolítica, biomas.'},
+      {key:'HISTÓRIA',        label:'História',          total:8,  icon:'📜',cls:'historia',    hint:'História do Brasil.'},
+      {key:'CIÊNCIAS',        label:'Ciências',          total:8,  icon:'🔬',cls:'ciencias',    hint:'Biologia, física e química.'},
+      {key:'LÍNGUA INGLESA',  label:'Língua Inglesa',    total:5,  icon:'🇺🇸',cls:'linglinglesa',hint:'Compreensão textual.'},
+      {key:'LÍNGUA PORTUGUESA',label:'Língua Portuguesa',total:17, icon:'📖',cls:'lingportugues',hint:'Interpretação, gramática.'},
+      {key:'MATEMÁTICA',      label:'Matemática',        total:17, icon:'📐',cls:'matematica',  hint:'Álgebra, geometria.'},
+    ]
+  },
+  '1ANO_12': {
+    label: '1º Ano 1 e 1º Ano 2 – Ensino Médio',
+    totalQ: 80,
+    prazo: '17/04/2026',
+    disciplines: [
+      {key:'ARTES',              label:'Artes',                    total:2,  icon:'🎨',cls:'artes',           hint:'Linguagens artísticas.'},
+      {key:'EDUCAÇÃO DIGITAL',   label:'Educação Digital',         total:2,  icon:'💻',cls:'eddigital',       hint:'Letramento digital.'},
+      {key:'EDUCAÇÃO FÍSICA',    label:'Educação Física',          total:2,  icon:'⚽',cls:'edfisica',        hint:'Esportes, saúde.'},
+      {key:'GEOGRAFIA',          label:'Geografia',                total:4,  icon:'🌎',cls:'geografia',       hint:'Geopolítica, biomas.'},
+      {key:'HISTÓRIA',           label:'História',                 total:4,  icon:'📜',cls:'historia',        hint:'História do Brasil.'},
+      {key:'LEITURA E PROTAGONISMO',label:'Leitura e Protagonismo',total:3,  icon:'📚',cls:'leitura',         hint:'Leitura, interpretação.'},
+      {key:'LÍNGUA INGLESA',     label:'Língua Inglesa',           total:4,  icon:'🇺🇸',cls:'linglinglesa',   hint:'Compreensão textual.'},
+      {key:'LÍNGUA PORTUGUESA',  label:'Língua Portuguesa',        total:20, icon:'📖',cls:'lingportugues',   hint:'Interpretação, gramática.'},
+      {key:'MATEMÁTICA',         label:'Matemática',               total:20, icon:'📐',cls:'matematica',      hint:'Álgebra, geometria.'},
+      {key:'CONEXÕES MATEMÁTICA',label:'Conexões Matemática',      total:5,  icon:'🔢',cls:'conexoes',        hint:'Aplicações da matemática.'},
+      {key:'BIOLOGIA',           label:'Biologia',                 total:3,  icon:'🧬',cls:'biologia',        hint:'Seres vivos, ecologia.'},
+      {key:'QUÍMICA',            label:'Química',                  total:3,  icon:'⚗️',cls:'quimica',         hint:'Matéria, transformações.'},
+      {key:'SOCIOLOGIA',         label:'Sociologia',               total:2,  icon:'👥',cls:'sociologia',      hint:'Sociedade, cultura.'},
+      {key:'FÍSICA',             label:'Física',                   total:3,  icon:'⚡',cls:'fisica',          hint:'Mecânica, termologia.'},
+      {key:'FILOSOFIA',          label:'Filosofia',                total:3,  icon:'🤔',cls:'filosofia',       hint:'Ética, lógica.'},
+    ]
+  },
+  '1ANO_ADMRH': {
+    label: '1º Ano ADM e 1º Ano RH – Ensino Médio',
+    totalQ: 0,
+    prazo: '17/04/2026',
+    disciplines: [
+      {key:'ARTES',              label:'Artes',                          total:1,  icon:'🎨',cls:'artes',           hint:'Linguagens artísticas.'},
+      {key:'EDUCAÇÃO DIGITAL',   label:'Educação Digital',               total:2,  icon:'💻',cls:'eddigital',       hint:'Letramento digital.'},
+      {key:'EDUCAÇÃO FÍSICA',    label:'Educação Física',                total:1,  icon:'⚽',cls:'edfisica',        hint:'Práticas corporais.'},
+      {key:'GEOGRAFIA',          label:'Geografia',                      total:3,  icon:'🌎',cls:'geografia',       hint:'Geopolítica.'},
+      {key:'HISTÓRIA',           label:'História',                       total:3,  icon:'📜',cls:'historia',        hint:'História do Brasil.'},
+      {key:'SUSTENTABILIDADE',   label:'Sustentabilidade',               total:3,  icon:'♻️',cls:'sustentabilidade',hint:'Responsabilidade ambiental.'},
+      {key:'LÍNGUA INGLESA',     label:'Língua Inglesa',                 total:5,  icon:'🇺🇸',cls:'linglinglesa',   hint:'Inglês aplicado.'},
+      {key:'LÍNGUA PORTUGUESA',  label:'Língua Portuguesa',              total:20, icon:'📖',cls:'lingportugues',   hint:'Interpretação, gramática.'},
+      {key:'MATEMÁTICA',         label:'Matemática',                     total:20, icon:'📐',cls:'matematica',      hint:'Matemática financeira.'},
+      {key:'PROJETO INTEGRADOR', label:'Proj. Integrador',               total:3,  icon:'🤝',cls:'projetointegrador',hint:'Projetos sociais.'},
+      {key:'FERRAMENTAS TRABALHO',label:'Ferramentas Trabalho',           total:3,  icon:'🛠️',cls:'ferramentas',     hint:'Competências mercado.'},
+      {key:'ÉTICA E RELAÇÕES',   label:'Ética e Relações',               total:3,  icon:'🤝',cls:'etica',           hint:'Ética profissional.'},
+      {key:'BIOLOGIA',           label:'Biologia',                       total:3,  icon:'🧬',cls:'biologia',        hint:'Ciências da vida.'},
+      {key:'QUÍMICA',            label:'Química',                        total:3,  icon:'⚗️',cls:'quimica',         hint:'Química aplicada.'},
+      {key:'SOCIOLOGIA',         label:'Sociologia',                     total:2,  icon:'👥',cls:'sociologia',      hint:'Sociedade, cultura.'},
+      {key:'FÍSICA',             label:'Física',                         total:3,  icon:'⚡',cls:'fisica',          hint:'Física aplicada.'},
+      {key:'FILOSOFIA',          label:'Filosofia',                      total:2,  icon:'🤔',cls:'filosofia',       hint:'Ética, lógica.'},
+    ]
+  },
+  '2ANO': {
+    label: '2º Ano – Ensino Médio',
+    totalQ: 0,
+    prazo: '17/04/2026',
+    disciplines: [
+      {key:'ARTES',              label:'Artes',                          total:2,  icon:'🎨',cls:'artes',           hint:'Linguagens artísticas.'},
+      {key:'EDUCAÇÃO DIGITAL',   label:'Educação Digital',               total:2,  icon:'💻',cls:'eddigital',       hint:'Letramento digital.'},
+      {key:'EDUCAÇÃO FÍSICA',    label:'Educação Física',                total:2,  icon:'⚽',cls:'edfisica',        hint:'Esportes, saúde.'},
+      {key:'GEOGRAFIA',          label:'Geografia',                      total:4,  icon:'🌎',cls:'geografia',       hint:'Geopolítica, biomas.'},
+      {key:'HISTÓRIA',           label:'História',                       total:4,  icon:'📜',cls:'historia',        hint:'História do Brasil.'},
+      {key:'INOVAÇÃO',           label:'Inovação',                       total:3,  icon:'♻️',cls:'inovacao',        hint:'Inovação e sustentabilidade.'},
+      {key:'LÍNGUA INGLESA',     label:'Língua Inglesa',                 total:4,  icon:'🇺🇸',cls:'linglinglesa',   hint:'Compreensão textual.'},
+      {key:'LÍNGUA PORTUGUESA',  label:'Língua Portuguesa',              total:20, icon:'📖',cls:'lingportugues',   hint:'Interpretação, gramática.'},
+      {key:'MATEMÁTICA',         label:'Matemática',                     total:20, icon:'📐',cls:'matematica',      hint:'Matemática contextualizada.'},
+      {key:'PRODUÇÃO CULTURAL',  label:'Produção Cultural',              total:3,  icon:'🎙️',cls:'producao',        hint:'Mídia e comunicação.'},
+      {key:'BIOLOGIA',           label:'Biologia',                       total:4,  icon:'🧬',cls:'biologia',        hint:'Seres vivos, ecologia.'},
+      {key:'QUÍMICA',            label:'Química',                        total:4,  icon:'⚗️',cls:'quimica',         hint:'Transformações químicas.'},
+      {key:'SOCIOLOGIA',         label:'Sociologia',                     total:2,  icon:'👥',cls:'sociologia',      hint:'Sociedade, cultura.'},
+      {key:'FÍSICA',             label:'Física',                         total:4,  icon:'⚡',cls:'fisica',          hint:'Mecânica, eletricidade.'},
+      {key:'FILOSOFIA',          label:'Filosofia',                      total:2,  icon:'🤔',cls:'filosofia',       hint:'Ética, lógica.'},
+    ]
+  },
+  '3ANO': {
+    label: '3º Ano – Ensino Médio',
+    totalQ: 0,
+    prazo: '17/04/2026',
+    disciplines: [
+      {key:'ARTES',              label:'Artes',                          total:2,  icon:'🎨',cls:'artes',           hint:'Linguagens artísticas.'},
+      {key:'EDUCAÇÃO FÍSICA',    label:'Educação Física',                total:2,  icon:'⚽',cls:'edfisica',        hint:'Esportes, saúde.'},
+      {key:'EDUCAÇÃO DIGITAL',   label:'Educação Digital',               total:2,  icon:'💻',cls:'eddigital',       hint:'Letramento digital.'},
+      {key:'GEOGRAFIA',          label:'Geografia',                      total:4,  icon:'🌎',cls:'geografia',       hint:'Geopolítica, biomas.'},
+      {key:'HISTÓRIA',           label:'História',                       total:4,  icon:'📜',cls:'historia',        hint:'História do Brasil.'},
+      {key:'LÍNGUA INGLESA',     label:'Língua Inglesa',                 total:4,  icon:'🇺🇸',cls:'linglinglesa',   hint:'Compreensão textual.'},
+      {key:'LÍNGUA PORTUGUESA',  label:'Língua Portuguesa',              total:20, icon:'📖',cls:'lingportugues',   hint:'Interpretação, gramática.'},
+      {key:'MATEMÁTICA',         label:'Matemática',                     total:20, icon:'📐',cls:'matematica',      hint:'Álgebra, geometria.'},
+      {key:'BIOLOGIA',           label:'Biologia',                       total:4,  icon:'🧬',cls:'biologia',        hint:'Seres vivos, ecologia.'},
+      {key:'QUÍMICA',            label:'Química',                        total:4,  icon:'⚗️',cls:'quimica',         hint:'Transformações químicas.'},
+      {key:'SOCIOLOGIA',         label:'Sociologia',                     total:2,  icon:'👥',cls:'sociologia',      hint:'Sociedade, cultura.'},
+      {key:'FÍSICA',             label:'Física',                         total:4,  icon:'⚡',cls:'fisica',          hint:'Mecânica, eletricidade.'},
+      {key:'FILOSOFIA',          label:'Filosofia',                      total:2,  icon:'🤔',cls:'filosofia',       hint:'Ética, lógica.'},
+    ]
+  },
+};
+
+Object.values(TURMAS).forEach(t => { if(t.totalQ === 0) t.totalQ = t.disciplines.reduce((a,d) => a + d.total, 0); });
+
+const ADMIN_PASSWORD = 'admin2026';
+const DB_KEY = 'simulado_multi_';
+const PW_KEY = DB_KEY + 'passwords';
+
+let currentTurma = null, currentDiscipline = null, currentTeacherName = null, adminTurmaFilter = 'ALL', adminDiscFilter = 'ALL';
+const imgData = {}; 
+
+// ============================================================
+// CORE FUNCTIONS
+// ============================================================
+function selectTurma(turmaKey) {
+  currentTurma = turmaKey;
+  document.querySelectorAll('#turma-selector .turma-btn').forEach(b => b.classList.toggle('active', b.dataset.turma === turmaKey));
+  const sel = document.getElementById('login-discipline');
+  sel.innerHTML = '<option value="">— Selecione —</option>';
+  TURMAS[turmaKey].disciplines.forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d.key; opt.textContent = d.label + ' (' + d.total + ' questões)';
+    sel.appendChild(opt);
+  });
+  updateHeader();
+}
+
+function updateHeader() {
+  if(currentTurma) {
+    const t = TURMAS[currentTurma];
+    document.getElementById('header-title').textContent = '📋 Simulado – ' + t.label;
+    document.getElementById('header-meta').innerHTML = '<span class="header-badge">' + t.totalQ + ' questões</span><span class="header-badge">Prazo: ' + t.prazo + '</span>';
+  }
+}
+
+function getDB() { const r=localStorage.getItem(DB_KEY+'data'); return r?JSON.parse(r):{}; }
+function saveDB(db) { localStorage.setItem(DB_KEY+'data',JSON.stringify(db)); }
+function getTeacherData(turmaKey, discKey) { return (getDB()[turmaKey] || {})[discKey] || null; }
+function saveTeacherData(turmaKey, discKey, data) {
+  const db=getDB(); if(!db[turmaKey]) db[turmaKey]={};
+  db[turmaKey][discKey]=data; saveDB(db);
+}
+
+function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+
+// ============================================================
+// LOGIN & LOGOUT
+// ============================================================
+function doLogin(){
+  if(!currentTurma) return toast('Selecione a turma.','error');
+  const disc=document.getElementById('login-discipline').value, name=document.getElementById('login-name').value.trim(), pass=document.getElementById('login-password').value;
+  if(!disc||!name||!pass) return toast('Preencha todos os campos.','error');
+  const passwords = getPasswords();
+  if(passwords[currentTurma + '__' + disc] !== pass) return toast('Código incorreto.','error');
+  currentDiscipline=disc; currentTeacherName=name; enterTeacherScreen();
+}
+
+function doLogout(){
+  currentDiscipline=null; currentTeacherName=null; currentTurma=null;
+  document.getElementById('login-discipline').value=''; document.getElementById('login-name').value=''; document.getElementById('login-password').value='';
+  document.querySelectorAll('.turma-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('header-title').textContent='📋 Simulado – E.E. Prof. Antônio Dias Maciel';
+  document.getElementById('header-meta').innerHTML='<span class="header-badge">Selecione a turma para continuar</span>';
+  showScreen('screen-login');
+}
+
+// ============================================================
+// TEACHER SCREEN
+// ============================================================
+function enterTeacherScreen(){
+  const disc = TURMAS[currentTurma].disciplines.find(d=>d.key===currentDiscipline);
+  document.getElementById('teacher-turma-label').textContent = '📋 ' + TURMAS[currentTurma].label;
+  document.getElementById('teacher-tag').textContent = currentTeacherName + ' · ' + disc.label;
+  
+  const saved = getTeacherData(currentTurma, currentDiscipline);
+  let rawWa = (saved && saved.whatsapp) ? saved.whatsapp : '';
+  if (rawWa.startsWith('55')) rawWa = rawWa.substring(2);
+  document.getElementById('teacher-whatsapp').value = rawWa;
+
+  buildTeacherForm(disc);
+  loadSavedData(disc);
+  updateProgress(disc);
+  showScreen('screen-teacher');
+}
+
+function buildTeacherForm(disc){
+  const area=document.getElementById('teacher-form-area'); area.innerHTML='';
+  const list=document.createElement('div'); list.className='question-list';
+  for(let i=0;i<disc.total;i++) list.appendChild(buildQuestionCard(i));
+  area.appendChild(list);
+}
+
+function buildQuestionCard(idx){
+  const n=idx+1; const div=document.createElement('div'); div.className='question-card';
+  div.innerHTML=`<span class="q-number">Q${String(n).padStart(2,'0')}</span>
+  <div class="field" style="margin-top:8px"><label>Enunciado da questão ${n}</label>
+  <textarea id="q${idx}_enunciado" placeholder="Digite o enunciado..." rows="3" oninput="onFieldChange()"></textarea></div>
+  <div class="field"><label style="font-size:0.75rem;color:var(--text3)">🖼️ Imagem (opcional)</label>
+  <div class="img-upload-area" onclick="document.getElementById('img${idx}').click()">
+  <input type="file" id="img${idx}" accept="image/*" onchange="handleImgUpload(${idx}, this)">
+  <label class="img-upload-label" id="img-label-${idx}">Clique para anexar imagem</label><div id="img-preview-${idx}"></div></div></div>
+  <div class="alternatives-grid">${['a','b','c','d'].map(l=>`<div class="alt-field"><div class="alt-letter">${l.toUpperCase()}</div><input type="text" id="q${idx}_${l}" placeholder="Alt ${l.toUpperCase()}..." oninput="onFieldChange()"></div>`).join('')}</div>
+  <div class="correct-field"><label>✅ Gabarito:</label><div class="correct-radio-group">
+  ${['A','B','C','D'].map(l=>`<input type="radio" name="q${idx}_correct" id="q${idx}_correct_${l}" value="${l}" onchange="onFieldChange()"><label for="q${idx}_correct_${l}">${l}</label>`).join('')}
+  </div></div>`;
+  return div;
+}
+
+function handleImgUpload(idx, input){
+  if(!input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = e => { imgData[currentTurma+'__'+currentDiscipline+'__'+idx]=e.target.result; renderImgPreview(idx, e.target.result); onFieldChange(); };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function renderImgPreview(idx, src){
+  const container = document.getElementById('img-preview-'+idx), label = document.getElementById('img-label-'+idx);
+  label.style.display = 'none';
+  container.innerHTML = `<img src="${src}" class="img-preview"><br><button class="img-remove-btn" onclick="event.stopPropagation(); removeImg(${idx})">✕ Remover</button>`;
+}
+
+function removeImg(idx){
+  delete imgData[currentTurma+'__'+currentDiscipline+'__'+idx];
+  document.getElementById('img-preview-'+idx).innerHTML = '';
+  document.getElementById('img-label-'+idx).style.display = 'block';
+  onFieldChange();
+}
+
+function loadSavedData(disc){
+  const saved=getTeacherData(currentTurma, disc.key); if(!saved||!saved.questions) return;
+  saved.questions.forEach((q,i)=>{
+    if(i>=disc.total) return;
+    document.getElementById('q'+i+'_enunciado').value=q.enunciado||'';
+    ['a','b','c','d'].forEach(l=>document.getElementById('q'+i+'_'+l).value=q[l]||'');
+    if(q.correta) document.getElementById('q'+i+'_correct_'+q.correta).checked=true;
+    if(q.img){ imgData[currentTurma+'__'+disc.key+'__'+i]=q.img; renderImgPreview(i, q.img); }
+  });
+}
+
+function saveData(){
+  const disc=TURMAS[currentTurma].disciplines.find(d=>d.key===currentDiscipline);
+  const questions = Array.from({length:disc.total},(_,i)=>({
+    enunciado:document.getElementById('q'+i+'_enunciado').value,
+    a:document.getElementById('q'+i+'_a').value, b:document.getElementById('q'+i+'_b').value,
+    c:document.getElementById('q'+i+'_c').value, d:document.getElementById('q'+i+'_d').value,
+    correta:(document.querySelector(`input[name="q${i}_correct"]:checked`)||{}).value||'',
+    img: imgData[currentTurma+'__'+currentDiscipline+'__'+i] || null
+  }));
+  let waRaw = document.getElementById('teacher-whatsapp').value.replace(/\D/g,'');
+  const wa = waRaw ? '55' + waRaw : '';
+  saveTeacherData(currentTurma, disc.key, { professor:currentTeacherName, whatsapp:wa, updatedAt:new Date().toISOString(), questions });
+  updateProgress(disc); toast('✅ Salvo com sucesso!','success'); return true;
+}
+
+function updateProgress(disc){
+  const filled = Array.from({length:disc.total},(_,i)=>document.getElementById('q'+i+'_enunciado').value.trim()!=='' && (document.querySelector(`input[name="q${i}_correct"]:checked`))).filter(x=>x).length;
+  const pct=Math.round((filled/disc.total)*100);
+  document.getElementById('progress-fill').style.width=pct+'%'; document.getElementById('progress-pct').textContent=pct+'%';
+  document.getElementById('progress-label').textContent=filled+' de '+disc.total+' questões';
+}
+
+function onFieldChange(){ if(currentTurma && currentDiscipline) updateProgress(TURMAS[currentTurma].disciplines.find(d=>d.key===currentDiscipline)); }
+
+function saveAndWhatsApp(){
+  saveData();
+  const disc=TURMAS[currentTurma].disciplines.find(d=>d.key===currentDiscipline);
+  const saved = getTeacherData(currentTurma, currentDiscipline);
+  const wa = saved.whatsapp || '5534999999999';
+  let msg=`*SIMULADO – ${TURMAS[currentTurma].label.toUpperCase()}*\nDisc: ${disc.label}\nProf: ${currentTeacherName}\n\n`;
+  saved.questions.forEach((q,i)=>msg+=`*Q${i+1}:* ${q.enunciado.substring(0,50)}...\n✅ Gab: ${q.correta}\n\n`);
+  window.open(`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+// ============================================================
+// ADMIN SCREEN
+// ============================================================
+function enterAdminScreen(){ 
+  updateAdminDiscFilterOptions();
+  renderAdminScreen(); 
+  showScreen('screen-admin'); 
+}
+
+function updateAdminDiscFilterOptions() {
+  const sel = document.getElementById('admin-disc-filter');
+  const currentVal = sel.value;
+  sel.innerHTML = '<option value="ALL">— Todas as Disciplinas —</option>';
+  
+  const discs = new Set();
+  Object.keys(TURMAS).forEach(tk => {
+    if(adminTurmaFilter === 'ALL' || tk === adminTurmaFilter) {
+      TURMAS[tk].disciplines.forEach(d => discs.add(d.key));
+    }
+  });
+  
+  Array.from(discs).sort().forEach(dk => {
+    const opt = document.createElement('option');
+    opt.value = dk; opt.textContent = dk;
+    sel.appendChild(opt);
+  });
+  
+  if (Array.from(discs).includes(currentVal)) sel.value = currentVal;
+  else adminDiscFilter = 'ALL';
+}
+
+function adminSelectTurma(t){
+  adminTurmaFilter = t;
+  document.querySelectorAll('#admin-turma-selector .turma-btn').forEach(b=>b.classList.toggle('active', b.dataset.turma === t));
+  updateAdminDiscFilterOptions();
+  updatePrintLabel();
+  renderAdminScreen();
+}
+
+function adminChangeDiscFilter() {
+  adminDiscFilter = document.getElementById('admin-disc-filter').value;
+  updatePrintLabel();
+  renderAdminScreen();
+}
+
+function updatePrintLabel() {
+  const tText = adminTurmaFilter === 'ALL' ? 'Todas as Turmas' : TURMAS[adminTurmaFilter].label;
+  const dText = adminDiscFilter === 'ALL' ? 'Todas as Disciplinas' : adminDiscFilter;
+  document.getElementById('print-label').textContent = `Filtro Ativo: ${tText} / ${dText}`;
+}
+
+function renderAdminScreen(){
+  const db=getDB(), passwords=getPasswords();
+  let completed=0, totalQ=0, totalDiscs=0, totalQMeta=0;
+
+  const pwbody=document.getElementById('pw-table-body'); pwbody.innerHTML='';
+  const tbody=document.getElementById('admin-table-body'); tbody.innerHTML='';
+
+  Object.keys(TURMAS).forEach(tk=>{
+    const turmaShow = (adminTurmaFilter === 'ALL' || tk === adminTurmaFilter);
+    TURMAS[tk].disciplines.forEach(d=>{
+      const discShow = (adminDiscFilter === 'ALL' || d.key === adminDiscFilter);
+      const e=(db[tk]||{})[d.key];
+      let filled=0; if(e&&e.questions) filled=e.questions.filter(q=>q.enunciado&&q.correta).length;
+      
+      if(turmaShow && discShow){
+        totalDiscs++; totalQ+=filled; totalQMeta+=d.total; if(filled===d.total) completed++;
+        
+        const trPw=document.createElement('tr');
+        trPw.innerHTML=`<td>${tk}</td><td>${d.label}</td><td>${e?e.professor:'—'}</td><td><span class="pw-code">${passwords[tk+'__'+d.key]}</span></td><td>${d.total}Q</td><td>${filled===d.total?'✅':'⏳'}</td>`;
+        pwbody.appendChild(trPw);
+
+        const trAdmin=document.createElement('tr');
+        trAdmin.innerHTML=`<td>${tk}</td><td>${d.label}</td><td>${e?e.professor:'—'}</td><td>${filled}</td><td>${d.total}</td><td>${filled===d.total?'✅':'—'}</td><td>${e?new Date(e.updatedAt).toLocaleDateString():'—'}</td><td>${e?`<button class="btn btn-danger btn-sm" onclick="deleteEntry('${tk}','${d.key}')">🗑</button>`:'—'}</td>`;
+        tbody.appendChild(trAdmin);
+      }
+    });
+  });
+
+  document.getElementById('admin-stats').innerHTML=`<div class="stat-card"><div class="stat-val">${completed}/${totalDiscs}</div><div class="stat-label">Completas</div></div><div class="stat-card"><div class="stat-val">${totalQ}/${totalQMeta}</div><div class="stat-label">Questões</div></div>`;
+}
+
+function deleteEntry(tk, dk){ if(confirm('Apagar?')){ const db=getDB(); delete db[tk][dk]; saveDB(db); renderAdminScreen(); } }
+function clearAllData(){ if(confirm('Limpar tudo?')){ localStorage.removeItem(DB_KEY+'data'); renderAdminScreen(); } }
+
+// ============================================================
+// PDF EXPORT (INDIVIDUAL BY FILTER)
+// ============================================================
+function buildPrintStyles(){
+  return `
+    <style>
+      :root{
+        --ink:#111111;
+        --muted:#4b5563;
+        --line:#bfc5cc;
+        --line-strong:#7f8a96;
+        --soft:#f3f4f6;
+        --soft-2:#fafafa;
+      }
+      *{box-sizing:border-box}
+      @page{size:A4;margin:8mm}
+      html,body{margin:0;padding:0}
+      body{font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:#fff;font-size:10.5pt;line-height:1.28;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+      .page{page-break-after:always;max-width:194mm;margin:0 auto;padding:6mm 7mm;border:1px solid var(--line)}
+      .page:last-child{page-break-after:auto}
+      .cover-page{min-height:278mm;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:18mm 14mm;background:linear-gradient(to bottom,#ffffff,#f4f4f4)}
+      .cover-logo{width:120px;height:auto;object-fit:contain;margin-bottom:12px}
+      .cover-school{font-size:20pt;font-weight:700;text-transform:uppercase;letter-spacing:.03em;line-height:1.2;max-width:150mm}
+      .cover-address{font-size:9.2pt;color:#333;margin-top:6px;max-width:140mm;line-height:1.45}
+      .cover-main-title{font-size:21pt;font-weight:700;text-transform:uppercase;letter-spacing:.09em;margin-top:22px}
+      .cover-box{margin-top:20px;width:100%;max-width:155mm;border:1.5px solid var(--line-strong);padding:14px 14px 10px;background:#fff}
+      .cover-box-title{font-size:9pt;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:12px;font-weight:700}
+      .cover-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;text-align:left}
+      .cover-field{min-height:36px}
+      .cover-label{font-size:8pt;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
+      .cover-line{display:block;border-bottom:1px solid #222;height:16px}
+      .official-header{border:1.5px solid var(--line-strong);padding:0;margin:0 0 8px 0}
+      .official-header-top{padding:8px 10px 6px;border-bottom:1.5px solid var(--line-strong)}
+      .header-brand{display:flex;align-items:center;justify-content:center;gap:10px}
+      .header-logo{width:54px;height:auto;object-fit:contain;flex:0 0 auto}
+      .header-brand-text{text-align:center}
+      .school-name{font-size:14pt;font-weight:700;letter-spacing:.02em;text-transform:uppercase;margin:0 0 3px 0}
+      .school-meta{font-size:8.6pt;margin:1px 0;color:#222}
+      .official-header-bottom{padding:7px 10px 6px}
+      .id-grid{display:grid;grid-template-columns:2.2fr 1fr .75fr;gap:8px;align-items:end}
+      .id-block{min-height:36px}
+      .id-label{font-size:8pt;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:2px}
+      .line-fill{display:block;border-bottom:1px solid #222;height:16px}
+      .id-value{display:block;border-bottom:1px solid #222;height:16px;font-size:9.3pt;font-weight:700}
+      .cover-band{border:1px solid var(--line-strong);padding:8px 10px;margin:0 0 8px 0;background:linear-gradient(to bottom,#fbfbfb,#f0f0f0)}
+      .cover-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}
+      .cover-title{font-size:13pt;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin:0}
+      .cover-subtitle{font-size:8.8pt;color:var(--muted);margin-top:3px}
+      .cover-chip{border:1px solid #555;padding:4px 10px;font-size:8pt;font-weight:700;text-transform:uppercase;background:#fff}
+      .cover-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:7px}
+      .stat-box{border:1px solid var(--line);padding:6px 8px;background:#fff}
+      .stat-label{font-size:7.7pt;text-transform:uppercase;color:var(--muted);font-weight:700;letter-spacing:.05em}
+      .stat-value{font-size:10pt;font-weight:700;margin-top:2px}
+      .discipline-bar{margin:7px 0 5px;padding:5px 8px;border:1px solid var(--line-strong);background:var(--soft);font-size:8.4pt;font-weight:700;text-transform:uppercase;letter-spacing:.05em;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+      .discipline-prof{font-size:8pt;text-transform:none;color:#333;font-weight:600;letter-spacing:0}
+      .question{border:1px solid var(--line);padding:6px 7px;margin:0 0 6px 0;break-inside:avoid-page;background:#fff}
+      .q-head{display:flex;align-items:flex-start;gap:6px}
+      .q-num{flex:0 0 20px;height:20px;border:1px solid #222;display:flex;align-items:center;justify-content:center;font-size:8.2pt;font-weight:700;background:#f1f1f1}
+      .q-text{flex:1;font-size:9.4pt;line-height:1.26}
+      .question-image{margin:5px 0 4px 26px;text-align:center}
+      .question-image img{max-width:100%;max-height:95px;width:auto;height:auto;object-fit:contain;border:1px solid var(--line);padding:2px;background:#fff}
+      .alternatives{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;margin:5px 0 0 26px}
+      .alternative{display:grid;grid-template-columns:18px 1fr;gap:5px;align-items:flex-start;border:1px solid #d7dbe0;padding:4px 5px;background:var(--soft-2);min-height:28px}
+      .alt-letter{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border:1px solid #222;font-size:8pt;font-weight:700;background:#fff}
+      .alt-text{font-size:8.8pt;line-height:1.22}
+      .footer-note{margin-top:6px;padding-top:5px;border-top:1px dashed var(--line-strong);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:7.8pt;color:var(--muted)}
+      .answer-title{font-size:12pt;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin:0 0 6px 0}
+      .gabarito-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:5px}
+      .gabarito-cell{border:1px solid var(--line);padding:6px 4px;text-align:center;background:#fff;min-height:42px}
+      .gabarito-num{font-size:7.4pt;text-transform:uppercase;color:var(--muted);font-weight:700;letter-spacing:.05em}
+      .gabarito-letter{font-size:15pt;font-weight:800;margin-top:2px;line-height:1}
+      .empty-state{padding:16px;text-align:center;border:1px dashed var(--line-strong);font-size:9pt;color:var(--muted)}
+      .pw-print-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+      .pw-print-title{font-size:13pt;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin:0}
+      .pw-print-subtitle{font-size:8.8pt;color:var(--muted);margin-top:3px}
+      .pw-print-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:10px 0}
+      .pw-meta-box{border:1px solid var(--line);padding:6px 8px;background:#fff}
+      .pw-meta-label{font-size:7.7pt;text-transform:uppercase;color:var(--muted);font-weight:700;letter-spacing:.05em}
+      .pw-meta-value{font-size:10pt;font-weight:700;margin-top:2px}
+      .pw-print-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:8.8pt}
+      .pw-print-table th,.pw-print-table td{border:1px solid var(--line);padding:6px 7px;vertical-align:top}
+      .pw-print-table th{background:var(--soft);text-transform:uppercase;font-size:7.8pt;letter-spacing:.05em}
+      .pw-status-ok{color:#166534;font-weight:700}
+      .pw-status-pending{color:#9a3412;font-weight:700}
+      @media print{
+        body{background:#fff}
+        .page{border-color:#9aa3ad}
+      }
+      @media (max-width:700px){
+        .cover-fields,.id-grid,.cover-stats,.alternatives,.gabarito-grid{grid-template-columns:1fr}
+        .question-image,.alternatives{margin-left:0}
+      }
+    </style>
+  `;
+}
+
+const PRINT_LOGO = 'data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCADIASIDASIAAhEBAxEB/8QAHAABAAICAwEAAAAAAAAAAAAAAAYHAQUDBAgC/8QASBAAAQMDAgMFBAQJCQkBAAAAAgABAwQFEQYSByExEyIyQVEUQlJhI2JxgRUWJDRygpGhwjNTkrGy0eHi8BclJkNUY3SiwdL/xAAbAQEAAgMBAQAAAAAAAAAAAAAABQYBAgMEB//EACoRAAEEAQMEAQQCAwAAAAAAAAABAgMEEgURMRMhQVEUBiMygUJhYnGR/9oADAMBAAIRAxEAPwD1SiIgCIiAIiIAiIgCIiALCyviR9o5zgWQED4pXJ46CK3wu/azkxntLDsDf4ru6B1IF2pPZqjuVcHLn77eqrPU95kul9q6gQfYz9lG2c7mZdK11ktBWxVNOWyojPLDn/1JTrNOR9f/ACKm/WFZc38cHopllabTl4hvNAFTC/PoQ+jrcqDc1WrspaWPSRMmhERYNwiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiID5yzqNa7u4WnT80j57SX6IGb4iUlw2FTPFO5lXX4aWJ8xUbd7HxEvVThWaVGkdqdn41dXeSGlOziR4FiZ9rOgn9L2huX2rgI2ce6AsP9LK4e03DsEO9lXBrdj5y6TJ2RKtGX6SxXPt+tJIeKhm828iV6UtRFUwBNATHGbZZ2815iGRwfJfoqyeGep3oZgtNwIWhk/kD9H+FQmqUt/vMLNoWqbL0H8FuosC+WZZUAXEIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCwsrBIDWX+vG12mqrC/5Ubk3zded5auerkllN8yzORm/wDmVl8YLsTBT2qEw7/0k25/LyZVcDbNrjz9VY9HgxYsi+SlfUFvOVIWrwcRY3Ew+FdujttTPRVFbTwudPT4aSRm6Llp7fNW1kNPTR5qJ5MA3w/pK+rDY6e2WQKDsxMXDEmW8bv1Xe9qHx9mt5PJpekfMVXP4PPE8GOY88tuz6ruQZYRYnJibGPkpFrLTb2K6sws/skv8gb+59VaIw7uS75M/M8L1RTMnjRUPHLWfVmVF5Qt3h9qJ7rRey1Zs9bTtgn+NviU0Xnm1XGSkrYqujLZLFzYfi+qrx07eILzbgqYX59DDzB/RVzUanRfk3guWkX0sR4OXuht0WGWVHE0EREAREQBERAEREBj0WM4Z1lRvW97GyWSaUfziT6KJvrusoiuXZDR70YiqpvqeaOcHKIssxOP3rnWk0nSFRafoojcjk2MRkXVyfqt0ioZauSbmURFg2CIiAIiIAiIgCIiAIiIAiwsoD5dui455QihOSQmEBbLu/ouTPRQviZdvYrF7MBkMtW+xtr4dm81vExZHoxDhYmSGNXr4Kqv9c92vlXWTETBJI4hz5MHktdGwABbmz9i7M7HIY7X3Y6Njot/o+wvfbwMRhikp3Y53x4vQFbnPZVh/wBHz1kbrtn+1Jlw00+9NTtdKsPyiYcRs/uB/irA6L4iAY4xAWwLdFF9Y6pOyy01DbaCa5XipZyipY3YcA3UzfyFVOWR0z81PoFWu2vGjENxf7RT3m2yUlSLOJc2f0f1VF3e3VFsr5aOoDYcfwv4h8iUqsnEq5Q6gitmqbeNKU57A2AYmLuXLuPne31hUu15YGu9C1RSbWroW3RvjxN8K9tKw6q/F/Ckdq+npbjyZyhTcbOG0wAQ9Xx1Uh0fqCSx3ApSffSzP9MHp9YVo5yNiICDszB++zvtwXw7U5Ft2hnHddWCWNs7MVKdXe+rMis5Q9EQTRzwhJETGBNlnZ1zqq+G+pHpZwtVbJ9DI/5KZeX1FaTG3qqpYhdC/BT6DUtNsxo9D6ysqsT1xdZOI0WnqelpAoxncJpCdyNw2Z3N0xz/AElZDSAG1jJmz0y64qxU5PUcyLAkxdHyiwDKIsIDKwsrD9EBxSSDGBEbsws2XdU7X3A9V6xpYgIvZBnYIg+o3iL9ylHE6+tSUTWumk21NS2SfbnbGo3wnpHn1FJKTZipoOT45bjf/KpKtFhC6d36IO5Y61hlZn7LhiFgDDdGX2sD0WVGk4EREAREQBERAEREAREQBYJ8DlZWCbLICvb3xStlpvNVbZqC4SS057COMBIc/tXX/wBrtn25KhuLd3d/Ji/3dVsNVaDtNdBcK2ngeG6SiUjTsZ+P5tnCom2hJcZooqcO2qpmPGG58ub/ANS99eGKVDm5VQuuHixY5qunhenuETzSDExyw7RYn+9Q7iDfIqu91s+4pKegDYwA2c+rt96rmsqmCiKWIz3O21vVnWyt0gXayBJN4sEE7Pnm/wBylKdFkb80UgNasr00Z48nEOqaM+5DBV7n6cm/vVkaW4h2SyWyKkjt11M3fdJJ2Yd8i57uZKB1mlfwdbrfeQj7OGrN4Qjd84HqJc1KuFuk6PUbVtVc90lLEQgAAbhvLq7lhYvPjkZ3Xsh10umyJOoid1La0xqKn1DaHuFNFLBBvIPp8C/Lq6qLUOtaeh4myXylkaroqeFqRsFtaQPEewn7r4dbnipG+mtPW+w2CNqSgqzk7Xvu+7u+DL/Et1o/UmlJtNUFtqToaV6eIYnpaphZmdh8t3J1DMZime26E2vokNNBZtY2u23Uqd5ohMainOQNhg7fvVRcS9Rz1WsKy33CvraS3Ucgh7PBMMLm20S37nbn96tK6a603ZYI4qeqiqD7oRUtC3aEWfCzMPJl0dWaSvl7uUdZbdTTW2ncBF6R6UDBvsfLPlaxOwdu9DK90Kkga3wxXGotp3Oco4XqphrXAn2D7w4UOpKGsvkEteVYUdQ82xsu+Gb7ui9J6e4fW622y5QVkh189wjKKeU22ZB/dZvJlUOpOGcmla5s3CY7VL4HAdpbvhLCmqd5r16f/CA1CkkSLOwjt1rpYqigtftJgZ7CnqYT2F9xeSlnDi63G08Q6W2PXV1aFZkJAqqk5GYMOTGzO/J1HrvZKa5Ri4ucBt3QONt3d+EhXc0zSFp6viuEMz1NwDm0hcu78C9tquksapt3Iyjfjh2Xcmek9lZxlr5c5GOWpIXfrnds/hJdDV91hvur7uN3uFTR0lqY4aSOHwyS5x97qUWjR1s1FfqfU0NVMMLye0FSB3XGfzfe3PH1Vu6Ph5babVNXfJJJqiaWQ5ooZMbIDLq7ev3quvexru/ot0Tuo3JpFuCNbXS3i5009ZLNTDTxmMM0jmQPuds/Jb2Xi5ZY5DB6C6OTOTcoW8v1ls9GaBotLV9RWU9XVVM04bD7R2x4s9GZRviBw9tFHYa652emeCshzO7doRDI2dzi7O603ikl78G/dENkHFqymOWo7n1/mW5/vX1DxYsclTFA1LcWKQwDJQszM5FhveVJFJ3CkID5NyZn6K6dK8ObI1rt9VcqaaorcjUb5JzbYfVu6JY5LvYrxQp3NGvVxY4lldG8XCC126orKksRRA5P8/ku7yDryVS8Ur57VXDbKc/ooH3y4fxn6fcvNWrrPIjDjetJWiV5DbjX1F3uFRWTG4TTnnn7ge6Ks/hBRjHZJ6zHeqZS5v5s3d/+KoRkkjYzJvA3IXZehtLUQ2+xUdODeCIcqY1TaKJsSFc0NHT2HTONwsrArKgC3hERAEREAREQBERAEREAWCWVgkB1LrJ2dtq5M42wm+fTkvPfCqBptdWvL7xYJZd3qr61QWzTtyJ/Klk/sqjeFUoUmp/aDfZFS0Rk+Oi9tVv2nqcZXY9yL8WLZ+BtY1dDT7Ao5H9ojxzxu6j+1cPCqOOfU8Fuq5NlLVOOXbAs5D0H7129c9pdXmrnNzl7R5evuutXSQvQwQSUsgQ1ERjKEznzdxU3s5kGHkhY1bcfn43Lq42CMFms0QALAFVyDy2sC2HBCAI9IFIAY7Sold+9nzUN4l3yK+ae0vUjgim3mfXk4jh/3qc8IXan4e0ckr7W+kMnfy7zqEka5K6J/ZNN/IlN8stvvdEVNdqUKiHO5mPyf1b0VYXLSegKGr7KrvzwH/MnXAWP6WXXQvV9u/EG/wD4FslQdDbSd2MwLBGDdTcm/cymVFwv0vQW2WKWiGeUgfdUzcz+1n8lxbvH2VTfLfgaS0dpCOrjuVlkGtlifun7V2rA/wBg8lJrzqaz2SYIrpXRUxk29mPPRUbw6OWn1/QDQGYxGcsRtzxIDe862XF+Sim1pBBStTx1fZiFRO/Xm/dy+fJdVrqsuCqYz7dizi4haU7Pe18onb9NcpVdj1jaqino6+mrY3baXYyM5Rv6+rKvNS03D63afklzS1Vb2eG9mn3GR46+LHVc/A2zVUD1l3nHs6WeMQj38ikx1L7FokaNbmi8GHJmmKkHvJ0louNVbqmup3mpjcD59fhWKOrjq4N9OYTCz7XfK6OuaSC83zUNwpIoYKWCo2gbA/fN/wCIsLS0M0kVjgo6SPFbVGeO94B8yVnqy5sTfkqF3S0hfuzyT3SGtaPT98Myr4XojfbOGX7voXhV6WO70F9t0dda6gKmkk8EgZw68dWOlCovARntkiidyPAcn/06uXSWvg0zbKiG5sR04N+TsAe/8CjtRpZ/cZySVC4ys5KzlLYvWp7PY5YY7xcaajOXwDMe13XV1fURVehrrUUkoSRSUhkBhzZ22qjtZU9zK30l61KZPcbm54gbpTxsO5hFW0Ddnwg+hZ2xbuTP+iohYcMVJ/LIobs29hI5jLa4c+T/AAr1PZWFrRRbPD2IY/oryxPI7UeSlJ+XJ3wS9T2wmG00rmTYaIcv9y9WofxNIzWazvkdisx1D4eY+5EPqSoUjkmlM5TF5TMjM/Fklvtd3x77ezeI99JTu4RMz8vrEoyWXHtMZJlLaZU6UeTuVKVrV75EuDOEN1YKBrhqC30wvkJJGI2b4R7y9DRjgBb0bCpzhNQRz3+Wpy7+yw7fvJXM3RRWqy5zY+if0KHCvn7MoiKMJwIiIAiIgCIiAIiIAiIgCwsrp3asGgtlTVuLm0EZHtbzwgNTrwxh0fdTJ8fk5MvP9hqzhq5YAcQ7aDY/l3dykWs+Ikuo7ONFDThRQSYOYTkYjcfh+Srq1XT/AIiGo7klOHdkZz2u4fVJTlCHBiueRt96ubgzlS79BaXC4xS1txj3QEBRRA/z6kqsvNBJZrxWW83JpaeRxYy5s7eX7ld/DbVY6lpKuOKgajjoiGJtsm9ibH2KJcb7SFPV0V5FgEJPyeZ3fz91eaK05bC5nWvWSCJGIViU5tEEW89ke4gjN/ARdSFW/Rw1MnAwhoclOVKT8n8t3e/dlU0cgNzMxYXb3+SnGluJUunLJFRHRw10Mb7Q2T4cWIvD4V3ttVyJh4OrDt8Ir7ZbVU1RXCphppZQYY5DPk4j1b5Lc634jQXOE7Jo53uNXPkJJafnsHz2+rqWyaG0vdRCtqLJTdrKLG+Mj1+xb21WS22gNltoaelb/tgzO6jZJmq/PY6onbYrvRen6bQ9Cd31HURR3CWPbHC8nhxz2j6k6iuho6LV2sq2S+OBFOBnHDI/edy/uZXDqLSFl1HNTy3qiGqkg3dmRSGOzPXGHXxYtF2Gx1xVtrt4QVbhs7TeZPj9Z3WUscqvKjEo+0eyac1sUF+p4p6enmKnMpA34H3TVuat1fabZpWWehraU5Z4XalCORu/5d1d68aD09eriddcbcMlTIO0j3kOf2OuGo4daXnkhOS1huii7ENpk2A+Hqj5mvVFUYqVDWR01DwjpZIp99RV1zHOYPnBd7uko3caCOz2Ergcgve6gO/SNnfDGXQyXoz8SdP/AINp6ArZA9HTydtHE+cCfxdV1rnw80vdLhPX11qjmqpsdofaGOcfY69EV7pL2OE1dJU2U8xaXnp6SnqpqqUXl5ZYxfkPyWYHi1FdDaoOWOCBvoYwfm/1lYuudBUWnqompaNntdSWQZnLuF6O+VGgt9NQHmjpwi39WYlYoJmTs3Qp1zarK7t3OnWBbmhigopag68MhP2km9mHy25V2264Q1vByZ4Z4zkhoiik+obe66pynttDHXxSlShJLne7SO7M/wCktrVa2hk0tLZ7JaYbVRTG/a7JXN373eUZeqrk1ELBpeoJYjxXlCPSNijF5XyONz+637FeOuNStb9LUVHRPmrrYGxh/AG3mSoueeJ4Ze12bdnPZ3l1Z9Yy1TgdbT9pLGDRNmTb3B6clv8AG60jVXhDN6w5kStj5UkGD3bBbvA258vt5LSael9qvFY5GbxbCIGJ/rLTXO/1FVD2YMMET9WB3y/6y2OhzN62ocuZdjtZ/wBZSj1xaVqOr02rnyp6L4R0fZ2GSp/6iQib7FPW6LU6VomoLDRU7e5GzP8AatwqbYfnIri7VIulCjAiIuR6QiIgCIiAIiIAiIgCIiALhqIY54DimATiNsEBNlnZcywfIUBANZ2iw2iyH7LZrd7VN9DELQBkiJculNB2ajtEQXG0W6oqS75udMD4f06LvtSPeNTe1TMT0lvbZGztyOTzdSroy6rK5G4bnmbFvIsinRtlpt9sjMLbRU1IBvkmgjYGL9i5a+gpLhA8FdTQ1MLvns5gYx/Y67SyuR6SPfibpnbt/F+1Y/8AED+5Y/EzTW0W/ANtw3T8nBSLknJZyUxsfMYiAMINgW5My+kRYMhERAFhZRAYWURAay+2qnu1smo6kWIJG/Y/qqDvVsqLLWy0NS3f+L4x+JejXbKi2uNOR3yhc4hYa2JsxF6/Je6jbWB+y8ERq1D5MeTPyQoknZzFm5e6/wA1stIT2u1XaJq+20U9JO+yTtYAPZ8+a608Tx7gNtkoHtNi8iXVkfMmzOR88qzPYyxHt7KXFNJVm3TlCZcSWsA1NLb7bardHlmllkjpwbu+63RQkqGjeQmGkpG9MwAz/wBS5J8MeMZz58+SyAO3PPrz9VrWrpDHibWtQksSq46o26kduz7Ck5eYQsttpC2xVWoqCnigAN8jE+wMd0e8uvILNubI7sKccJaH2jUB1Zhyp4duce8S1uyYQKp109HzWWMcpcMTbAx6LkWFlU8+iIEREAREQBERAEREAREQBERAFhZRAfAgINgWZhX2iIAiIgCIiAIiIAiIgCIiAIiIAvkmX0iArTiXpt5BK7UYeD84jx4h9VVskLO4vjvP0fyXpiUBkFwNmcX5Ozqldeadey14lCH+75T+j2+6Xwqb0y5t9p5VNc0xHffZ+yHywybMHt5ea+i3gw+L9LC+y+gDA7drtu/1lcEnQnGT7nf+FT7Spu2bwcg4PkO58v5srf4TUrBYZKrDbp5Hw/1W5MqcKRgAjHuk7EOA+LyXobSVD+DtPUFKws3Zwsz/AGqH1l+MaMLH9ORZSq/0btERV0ugREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREB8v0Wtvdrp7xbpqSpHIG3J8eF/J2W0Xy6yjse5q5qOTFTzleLbPZ7hLR1vcOL3299vIhWvEAkcmJ8Cb7sMrx15pqO+W7tYRH26EX7F/X5KljheGQ2ICAw7phjo4+6rTp9vrs2Xkoerae6tLk38FOew0cddfLdRi5FvnbPzYe8/9lejI2ZgZm9FTXCui9p1KdU4Y9mh7z/Mlc7dFE6rLnLj6LBoEGECv9n0iIosngiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgPl2VacSNOtC8l2oohy/5w38SszzXDUQhPGccrMQE2HZdoJnQvzaeW3WbZjVjiEcJ6NgtVVWY/OJeX2DyU8XRs9tp7TQx0dGDjDH4Wd13s8nWs0vVerzatD0YkZ6PpERcz0BERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBEWC6OgGUyyrLVdy1tBe6oLJRynQNtaEwgAvd5+Im81qxufEsofzMWLzzTgz/21ukPncxuXDlkVQfhXiO83dojYM9Hgj/8A0rPsR1clnozuQMFa8YvMOMYPzWHMwG5sURFqZCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAxhMIiALKIgCIiAIiIAiIgCIiAIiID//Z';
+
+function buildEvaluationHeader(turmaLabel, subtitle, chipLabel, blankTurma=false){
+  const turmaField = blankTurma ? '<span class="line-fill"></span>' : `<span class="id-value">${turmaLabel}</span>`;
+  const chip = chipLabel ? `<div style="font-size:7.8pt;font-weight:700;text-transform:uppercase;border:1px solid #444;padding:3px 8px;background:#fff">${chipLabel}</div>` : '';
+  return `
+    <div class="official-header">
+      <div class="official-header-top">
+        <div class="header-brand">
+          <img src="${PRINT_LOGO}" alt="Logomarca da escola" class="header-logo">
+          <div class="header-brand-text">
+            <div class="school-name">Escola Estadual Professor Antônio Dias Maciel</div>
+            <div class="school-meta">Avenida Getúlio Vargas, 45. CEP 38700-126: Patos de Minas – MG</div>
+            <div class="school-meta">Escola118982@educacao.mg.gov.br</div>
+          </div>
+        </div>
+      </div>
+      <div class="official-header-bottom">
+        <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px">
+          <div style="font-size:11pt;font-weight:700;text-transform:uppercase;letter-spacing:.04em">${subtitle}</div>
+          ${chip}
+        </div>
+        <div class="id-grid">
+          <div class="id-block">
+            <div class="id-label">Estudante</div>
+            <span class="line-fill"></span>
+          </div>
+          <div class="id-block">
+            <div class="id-label">Turma</div>
+            ${turmaField}
+          </div>
+          <div class="id-block">
+            <div class="id-label">Nota</div>
+            <span class="line-fill"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function buildCompactCover(turmaLabel, totalQuestions, totalDisciplines){
+  return `
+    <div class="cover-band">
+      <div class="cover-top">
+        <div>
+          <div class="cover-title">Gabarito oficial</div>
+          <div class="cover-subtitle">Documento interno para conferência e correção.</div>
+        </div>
+        <div class="cover-chip">${turmaLabel}</div>
+      </div>
+      <div class="cover-stats">
+        <div class="stat-box"><div class="stat-label">Turma</div><div class="stat-value">${turmaLabel}</div></div>
+        <div class="stat-box"><div class="stat-label">Disciplinas</div><div class="stat-value">${totalDisciplines}</div></div>
+        <div class="stat-box"><div class="stat-label">Questões</div><div class="stat-value">${totalQuestions}</div></div>
+      </div>
+    </div>
+  `;
+}
+
+function buildStudentCover(){
+  return `
+    <div class="page cover-page">
+      <img src="${PRINT_LOGO}" alt="Logomarca da escola" class="cover-logo">
+      <div class="cover-school">Escola Estadual Professor Antônio Dias Maciel</div>
+      <div class="cover-address">Avenida Getúlio Vargas, 45 · CEP 38700-126 · Patos de Minas – MG<br>Escola118982@educacao.mg.gov.br</div>
+      <div class="cover-main-title">Caderno de Avaliação</div>
+      <div class="cover-box">
+        <div class="cover-box-title">Identificação do estudante</div>
+        <div class="cover-fields">
+          <div class="cover-field" style="grid-column:1 / -1">
+            <div class="cover-label">Nome completo</div>
+            <span class="cover-line"></span>
+          </div>
+          <div class="cover-field">
+            <div class="cover-label">Turma</div>
+            <span class="cover-line"></span>
+          </div>
+          <div class="cover-field">
+            <div class="cover-label">Data</div>
+            <span class="cover-line"></span>
+          </div>
+          <div class="cover-field">
+            <div class="cover-label">Turno</div>
+            <span class="cover-line"></span>
+          </div>
+          <div class="cover-field">
+            <div class="cover-label">Número</div>
+            <span class="cover-line"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function escapeHTML(value=''){
+  return String(value)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;');
+}
+
+function openPrintWindow(title, bodyHTML){
+  const printWin = window.open('', '_blank');
+  if(!printWin){
+    toast('O navegador bloqueou a janela de impressão. Libere pop-ups e tente novamente.','error');
+    return null;
+  }
+  printWin.document.write(`<html><head><meta charset="UTF-8"><title>${escapeHTML(title)}</title>${buildPrintStyles()}</head><body>${bodyHTML}<script>window.onload=()=>window.print()<\/script></body></html>`);
+  printWin.document.close();
+  return printWin;
+}
+
+function exportAllPDF(){
+  const db=getDB();
+  const turmas = adminTurmaFilter==='ALL' ? Object.keys(TURMAS) : [adminTurmaFilter];
+  let html = ``;
+
+  let totalHas = false;
+  turmas.forEach(tk=>{
+    let qHTML='', qNum=1, has=false, totalQuestions=0, totalDisciplines=0;
+    TURMAS[tk].disciplines.forEach(d=>{
+      if(adminDiscFilter !== 'ALL' && d.key !== adminDiscFilter) return;
+      const e=(db[tk]||{})[d.key];
+      if(!e||!e.questions||!e.questions.length) return;
+      has=true; totalHas=true; totalDisciplines += 1; totalQuestions += e.questions.length;
+      qHTML += `<div class="discipline-bar"><span>${escapeHTML(d.label)}</span><span class="discipline-prof">Professor(a): ${escapeHTML(e.professor || '—')}</span></div>`;
+      e.questions.forEach(q=>{
+        qHTML += `<div class="question">
+          <div class="q-head"><span class="q-num">${qNum++}</span><div class="q-text">${escapeHTML(q.enunciado || '')}</div></div>
+          ${q.img ? `<div class="question-image"><img src="${q.img}" alt="Imagem da questão"></div>` : ''}
+          <div class="alternatives">
+            <div class="alternative"><span class="alt-letter">A</span><div class="alt-text">${escapeHTML(q.a || '')}</div></div>
+            <div class="alternative"><span class="alt-letter">B</span><div class="alt-text">${escapeHTML(q.b || '')}</div></div>
+            <div class="alternative"><span class="alt-letter">C</span><div class="alt-text">${escapeHTML(q.c || '')}</div></div>
+            <div class="alternative"><span class="alt-letter">D</span><div class="alt-text">${escapeHTML(q.d || '')}</div></div>
+          </div>
+        </div>`;
+      });
+    });
+
+    if(has){
+      html += `${buildStudentCover()}
+        <div class="page">
+        ${buildEvaluationHeader(TURMAS[tk].label,'Avaliação / Prova','',true)}
+        ${qHTML}
+        <div class="footer-note"><span>Leia com atenção e marque apenas uma alternativa por questão.</span><span>Confira seus dados antes de entregar.</span></div>
+      </div>`;
+    }
+  });
+
+  if(!totalHas) return toast('Sem dados para os filtros selecionados.','error');
+  openPrintWindow('Provas Otimizadas', html);
+}
+
+function exportGabaritoPDF(){
+  const db=getDB();
+  const turmas = adminTurmaFilter==='ALL' ? Object.keys(TURMAS) : [adminTurmaFilter];
+  let html = ``;
+
+  let totalHas = false;
+  turmas.forEach(tk=>{
+    let gHTML='', qNum=1, has=false, totalQuestions=0, totalDisciplines=0;
+    TURMAS[tk].disciplines.forEach(d=>{
+      if(adminDiscFilter !== 'ALL' && d.key !== adminDiscFilter) return;
+      const e=(db[tk]||{})[d.key];
+      if(!e||!e.questions||!e.questions.length) return;
+      has=true; totalHas=true; totalDisciplines += 1; totalQuestions += e.questions.length;
+      let cells='';
+      e.questions.forEach(q=>cells += `<div class="gabarito-cell"><div class="gabarito-num">Q${qNum++}</div><div class="gabarito-letter">${q.correta || '—'}</div></div>`);
+      gHTML += `<div class="discipline-bar"><span>${escapeHTML(d.label)}</span><span class="discipline-prof">Professor(a): ${escapeHTML(e.professor || '—')}</span></div><div class="gabarito-grid">${cells}</div>`;
+    });
+
+    if(has){
+      html += `<div class="page">
+        ${buildEvaluationHeader(TURMAS[tk].label,'Gabarito oficial','Uso interno')}
+        ${buildCompactCover(TURMAS[tk].label, totalQuestions, totalDisciplines)}
+        <div class="answer-title">Respostas por questão</div>
+        ${gHTML}
+      </div>`;
+    }
+  });
+
+  if(!totalHas) return toast('Sem dados para os filtros selecionados.','error');
+  openPrintWindow('Gabaritos Otimizados', html);
+}
+
+function printPasswords(){
+  const db = getDB();
+  const passwords = getPasswords();
+  const turmas = adminTurmaFilter === 'ALL' ? Object.keys(TURMAS) : [adminTurmaFilter];
+  const tText = adminTurmaFilter === 'ALL' ? 'Todas as Turmas' : TURMAS[adminTurmaFilter].label;
+  const dText = adminDiscFilter === 'ALL' ? 'Todas as Disciplinas' : adminDiscFilter;
+  const generatedAt = new Date().toLocaleString('pt-BR');
+  let rows = '';
+  let totalRows = 0;
+  let totalCompleted = 0;
+
+  turmas.forEach(tk => {
+    TURMAS[tk].disciplines.forEach(d => {
+      if(adminDiscFilter !== 'ALL' && d.key !== adminDiscFilter) return;
+      const e = (db[tk] || {})[d.key];
+      const filled = e && e.questions ? e.questions.filter(q => q.enunciado && q.correta).length : 0;
+      const done = filled === d.total;
+      if(done) totalCompleted += 1;
+      totalRows += 1;
+      rows += `<tr>
+        <td>${escapeHTML(TURMAS[tk].label)}</td>
+        <td>${escapeHTML(d.label)}</td>
+        <td>${escapeHTML(e ? e.professor : '—')}</td>
+        <td><strong>${escapeHTML(passwords[tk+'__'+d.key] || '—')}</strong></td>
+        <td>${filled}/${d.total}</td>
+        <td class="${done ? 'pw-status-ok' : 'pw-status-pending'}">${done ? 'Completo' : 'Pendente'}</td>
+      </tr>`;
+    });
+  });
+
+  if(!rows) return toast('Sem códigos para os filtros selecionados.','error');
+
+  const html = `
+    <div class="page">
+      ${buildEvaluationHeader('', 'Códigos de acesso por filtro', 'Uso interno', true)}
+      <div class="pw-print-head">
+        <div>
+          <div class="pw-print-title">Relação de códigos para impressão em PDF</div>
+          <div class="pw-print-subtitle">Documento gerado conforme os filtros ativos no painel administrativo.</div>
+        </div>
+        <div class="cover-chip">${escapeHTML(generatedAt)}</div>
+      </div>
+      <div class="pw-print-meta">
+        <div class="pw-meta-box"><div class="pw-meta-label">Turma</div><div class="pw-meta-value">${escapeHTML(tText)}</div></div>
+        <div class="pw-meta-box"><div class="pw-meta-label">Disciplina</div><div class="pw-meta-value">${escapeHTML(dText)}</div></div>
+        <div class="pw-meta-box"><div class="pw-meta-label">Registros</div><div class="pw-meta-value">${totalRows} (${totalCompleted} completos)</div></div>
+      </div>
+      <table class="pw-print-table">
+        <thead>
+          <tr><th>Turma</th><th>Disciplina</th><th>Professor(a)</th><th>Código</th><th>Questões</th><th>Status</th></tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+      <div class="footer-note"><span>Use a opção “Salvar como PDF” no diálogo de impressão do navegador.</span><span>Os códigos respeitam o filtro ativo exibido no painel.</span></div>
+    </div>`;
+
+  openPrintWindow('Códigos de Acesso', html);
+}
+
+function getPasswords() {
+  const raw = localStorage.getItem(PW_KEY); if(raw) return JSON.parse(raw);
+  const pw = {}; Object.keys(TURMAS).forEach(tk=>TURMAS[tk].disciplines.forEach(d=>pw[tk+'__'+d.key]=Math.random().toString(36).substring(2,8).toUpperCase()));
+  localStorage.setItem(PW_KEY, JSON.stringify(pw)); return pw;
+}
+function regeneratePasswords(){ if(confirm('Gerar novos?')){ localStorage.removeItem(PW_KEY); renderAdminScreen(); } }
+function downloadDB(){ const blob=new Blob([JSON.stringify(getDB(),null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='simulado_backup.json'; a.click(); }
+function downloadCSV(){ let csv='\uFEFFTurma,Disciplina,Professor,Gabarito\n'; const db=getDB(); Object.keys(TURMAS).forEach(tk=>TURMAS[tk].disciplines.forEach(d=>{ const e=db[tk]?.[d.key]; if(e) e.questions.forEach((q,i)=>csv+=`"${tk}","${d.key}","${e.professor}","${q.correta}"\n`); })); const blob=new Blob([csv],{type:'text/csv'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='simulado.csv'; a.click(); }
+
+function showAdminLogin(){ document.getElementById('modal-overlay').style.display='flex'; document.getElementById('admin-password').value=''; }
+function closeAdminModal(){ document.getElementById('modal-overlay').style.display='none'; }
+function doAdminLogin(){ if(document.getElementById('admin-password').value===ADMIN_PASSWORD){ closeAdminModal(); enterAdminScreen(); } else toast('Senha errada','error'); }
+
+function toast(msg,type=''){ const el=document.getElementById('toast'); el.textContent=msg; el.className='show '+(type==='error'?'error':'success'); setTimeout(()=>el.className='',3000); }
+</script>
+</body>
+</html>
